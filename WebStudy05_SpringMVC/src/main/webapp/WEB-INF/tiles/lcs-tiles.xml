@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd" >
+<tiles-definitions>
+	<definition name="parent" template="/WEB-INF/jsp/template.jsp">
+	  	<put-attribute name="title" value="Company403"></put-attribute>
+	  	<put-attribute name="preScript" value="/includee/preScript.jsp" />
+	  	<put-attribute name="headerMenu" value="/includee/headerMenu.jsp" />
+	    <put-attribute name="leftMenu" value="/includee/leftMenu.jsp" />
+	    
+	    <put-attribute name="footer" value="/includee/footer.jsp" />
+	    <put-attribute name="postScript" value="/includee/postScript.jsp" />
+    </definition>
+
+    <definition name="index" extends="parent" >
+	 	<put-attribute name="main" value="/WEB-INF/jsp/index.jsp"></put-attribute>
+	</definition>
+  	
+   	<definition name="member/*" extends="parent" preparer="kr.or.ddit.member.view.MemberViewPreparer">
+	 	<put-attribute name="main" value="/WEB-INF/jsp/member/{1}.jsp" />
+	</definition>
+	
+	  <definition name="prod/*" extends="parent" preparer="kr.or.ddit.prod.view.ProdViewPreparer">
+	 	<put-attribute name="main" value="/WEB-INF/jsp/prod/{1}.jsp" />
+	</definition>
+	
+	<definition name="buyer/*" extends="parent" preparer="kr.or.ddit.buyer.view.BuyerViewPreparer">
+	 	<put-attribute name="main" value="/WEB-INF/jsp/buyer/{1}.jsp" />
+	</definition>
+ 
+ 	<definition name="calendar/*" extends="parent" >
+	 	<put-attribute name="main" value="/WEB-INF/jsp/calendar/{1}.jsp" />
+	</definition>
+	
+	<definition name="chat/*" extends="parent" >
+	 	<put-attribute name="main" value="/WEB-INF/jsp/chat/{1}.jsp" />
+	</definition>
+	
+	<definition name="autumn/*" extends="parent" >
+	 	<put-attribute name="main" value="/WEB-INF/jsp/autumn/{1}.jsp" />
+	</definition>
+
+</tiles-definitions>

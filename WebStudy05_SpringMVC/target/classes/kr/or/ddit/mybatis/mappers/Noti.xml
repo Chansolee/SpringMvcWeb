@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.noti.dao.NotiDAO"><!-- namespace에는 inface가 필요 -->
+
+
+
+	
+	<select id="selectNoti" resultType="NotiVO" parameterType="Integer">
+			
+	SELECT *
+		FROM NOTI 
+		WHERE NOT_NO = #{notNo,jdbcType=INTEGER}
+		
+		
+	
+	    
+	</select>
+	
+	<select id="selectNotiList"   resultType="NotiVO" parameterType="string">
+		SELECT *
+		FROM NOTI
+		WHERE MEM_ID = #{memId,jdbcType=VARCHAR}                       
+		
+	</select>
+	
+
+	<insert id="insertNoti" parameterType="NotiVO">
+	<selectKey resultType="int" keyProperty="notNo" order="BEFORE">
+	SELECT NVL(MAX(NOT_NO), 0) + 1 FROM NOTI
+	</selectKey>
+		INSERT INTO NOTI (         
+			 NOT_NO
+			,MEM_ID
+			,SENDMEM_ID
+			,NOT_CRD
+			,NOT_CON
+			,NOT_RESULT
+			,SENDMEM_NAME
+			,NOT_TYPE
+			   
+			 ) VALUES (               
+					  #{notNo,jdbcType=INTEGER}
+					, #{memId,jdbcType=VARCHAR}
+					, #{sendmemId,jdbcType=VARCHAR}
+					, sysdate
+					, #{notCon,jdbcType=VARCHAR}
+					, 0
+					, #{sendmemName,jdbcType=VARCHAR}
+					, #{notTpye,jdbcType=INTEGER}
+					
+			)						 
+	</insert>
+	
+	<update id="updateNoti" parameterType="NotiVO">
+	 UPDATE NOTI                  
+	     SET                        
+			     
+			NOT_RESULT    = 1   
+			 
+			 
+			 
+		
+		 WHERE  NOT_NO = #{notNo,jdbcType=INTEGER}                
+	</update>
+	
+	
+	<delete id="deleteNoti" parameterType="Integer">
+	    DELETE FROM NOTI
+		WHERE
+		NOT_NO = #{notNo,jdbcType=INTEGER}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.buyer.dao.BuyerDAO"><!-- namespace에는 inface가 필요 -->
+	
+<!-- 	<sql id="searchFrag"> -->
+<!-- 		WHERE ENAME IS NOT NULL -->
+<!-- 		<trim prefix="AND (" suffix=")"> -->
+<!-- 		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)"> -->
+<!-- 			<choose> -->
+<!-- 				<when test="'name' eq simpleCondition.searchType"> -->
+<!-- 					INSTR(ENAME, #{simpleCondition.searchWord}) > 0	 -->
+<!-- 				</when> -->
+<!-- 				<when test="'address' eq simpleCondition.searchType"> -->
+<!-- 					INSTR(JOB, #{simpleCondition.searchWord}) > 0	 -->
+<!-- 				</when> -->
+<!-- 				<otherwise> -->
+					
+<!-- 					INSTR(ENAME, #{simpleCondition.searchWord}) > 0 -->
+<!-- 					OR -->
+<!-- 					INSTR(JOB, #{simpleCondition.searchWord}) > 0 -->
+					
+<!-- 				</otherwise> -->
+<!-- 			</choose> -->
+<!-- 		</if> -->
+<!-- 		</trim> -->
+<!-- 	</sql> -->
+	
+	
+	<resultMap type="BuyerVO" id="BuyerMap" autoMapping="true">
+		<id property="buyerId" column="BUYER_ID"/>
+	  		<collection property="prodList" ofType="ProdVO" autoMapping="true">
+				<id property="prodId" column="PROD_ID"/>
+			</collection>
+	</resultMap>
+	
+	
+
+	
+	<select id="selectTotalRecord" resultType="int">
+		SELECT COUNT(*)
+		FROM BUYER
+		
+	</select>
+	
+	<select id="selectBuyerList" resultMap="BuyerMap" parameterType="PagingVO">
+			
+	SELECT *
+		FROM BUYER B INNER JOIN PROD P ON( B.BUYER_ID = P.PROD_BUYER )
+		
+		
+	
+	    
+	</select>
+	
+	<select id="selectBuyer" parameterType="string"   resultMap="BuyerMap">
+		SELECT *
+		FROM BUYER B INNER JOIN PROD P ON( B.BUYER_ID = P.PROD_BUYER )
+		WHERE B.BUYER_ID= #{buyerId,jdbcType=CHAR}                            
+		
+	</select>
+	
+
+<!-- 	<insert id="insertEmp" parameterType="EmpVO"> -->
+<!-- 		INSERT INTO EMP (          -->
+<!-- 			     EMPNO               -->
+<!-- 			   , ENAME             -->
+<!-- 			   , JOB             -->
+<!-- 			   , MGR           -->
+<!-- 			   , HIREDATE           -->
+<!-- 			   , SAL              -->
+<!-- 			   , COMM              -->
+<!-- 			   , DEPTNO             -->
+<!-- 			 ) VALUES (                -->
+<!-- 					#{Empno,jdbcType=INTEGER} -->
+<!-- 					, #{Ename,jdbcType=VARCHAR} -->
+<!-- 					, #{Job,jdbcType=VARCHAR} -->
+<!-- 					, #{Mgr,jdbcType=INTEGER} -->
+<!-- 					, #{Hiredate,jdbcType=DATE} -->
+<!-- 					, #{Sal,jdbcType=INTEGER} -->
+<!-- 					, #{Comm,jdbcType=INTEGER} -->
+<!-- 					, #{Deptno,jdbcType=INTEGER} -->
+<!-- 			)						  -->
+<!-- 	</insert> -->
+	
+	<update id="updateBuyer" parameterType="BuyerVO">
+	 UPDATE BUYER                  
+	     SET                        
+			      
+			 BUYER_NAME =  #{buyerName,jdbcType=VARCHAR}  
+			,BUYER_LGU  =  #{buyerLgu,jdbcType=VARCHAR}    
+			,BUYER_BANK =  #{buyerBank,jdbcType=VARCHAR}    
+			,BUYER_BANKNO  =  #{buyerBankno,jdbcType=VARCHAR} 
+			,BUYER_BANKNAME  =  #{buyerBankname,jdbcType=VARCHAR}    
+			,BUYER_ZIP  =  #{buyerZip,jdbcType=VARCHAR}   
+			,BUYER_ADD1  =  #{buyerAdd1,jdbcType=VARCHAR}
+			,BUYER_ADD2  =  #{buyerAdd2,jdbcType=VARCHAR}
+			,BUYER_COMTEL  =  #{buyerComtel,jdbcType=VARCHAR}
+			,BUYER_FAX  =  #{buyerFax,jdbcType=VARCHAR}
+			,BUYER_MAIL  =  #{buyerMail,jdbcType=VARCHAR}
+			,BUYER_CHARGER  =  #{buyerCharger,jdbcType=VARCHAR}
+			,BUYER_TELEXT  =  #{buyerTelext,jdbcType=VARCHAR} 
+	
+		 WHERE  BUYER_ID = #{buyerId,jdbcType=CHAR}                
+	</update>
+	
+	
+<!-- 	<delete id="deleteEmp" parameterType="Integer"> -->
+<!-- 	    DELETE FROM EMP -->
+<!-- 		WHERE -->
+<!-- 		EMPNO = #{Empno,jdbcType=INTEGER} -->
+<!-- 	</delete> -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

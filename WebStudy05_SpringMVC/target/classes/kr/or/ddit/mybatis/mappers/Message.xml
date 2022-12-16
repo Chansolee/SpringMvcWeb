@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.autumn.dao.MessageDAO"><!-- namespace에는 inface가 필요 -->
+
+
+<resultMap type="MessageVO" id="messageListMap" autoMapping="true" >
+		<collection property="chatRoomList" ofType="ChatRoomVO" autoMapping="true">
+			<id property="roomId" column="ROOM_ID"/>
+		</collection>
+	</resultMap>
+
+
+
+	
+	<select id="selectChatRoomList"   resultMap="messageListMap" parameterType="String">
+		SELECT DISTINCT C.ROOM_NAME, C.ROOM_ID
+		FROM MESSAGE M INNER JOIN CHATROOM C
+		ON(M.ROOM_ID = C.ROOM_ID)
+		WHERE M.MEM_ID = #{memId,jdbcType=VARCHAR}                 
+	</select>
+	
+	
+	<select id="selectMessageList"   resultType="MessageVO" parameterType="Integer">
+		SELECT *
+		FROM MESSAGE
+		WHERE ROOM_ID = #{roomId,jdbcType=INTEGER}               
+	</select>
+
+	<insert id="insertMessage" parameterType="MessageVO">
+	<selectKey resultType="int" keyProperty="msgNo" order="BEFORE">
+	SELECT NVL(MAX(MSG_NO), 0) + 1 FROM MESSAGE
+	</selectKey>
+		INSERT INTO MESSAGE (         
+			 MSG_NO
+			,MSG_CON
+			,ROOM_ID
+			,MEM_ID
+			,MSG_DAY
+		
+			 ) VALUES (               
+					  #{msgNo,jdbcType=INTEGER}
+<!-- 					, #{msgCon,jdbcType=VARCHAR} -->
+					,'테스트 메세지'
+					, #{roomId,jdbcType=INTEGER}
+					, #{memId,jdbcType=VARCHAR}
+					, sysdate
+				
+			)						 
+	</insert>
+	
+
+	
+	<delete id="deleteMessage" parameterType="Integer">
+	    DELETE FROM MESSAGE
+		WHERE
+		MSG_NO = #{msgNo,jdbcType=INTEGER}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
